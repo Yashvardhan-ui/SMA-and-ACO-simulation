@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PathMind — Bio-Inspired City Pathfinder</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- ╔══════════════════════════════════════════════════╗
+     ║                   NAVBAR                        ║
+     ╚══════════════════════════════════════════════════╝ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a class="brand" href="#">
+      <div class="brand-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="12" cy="12" r="3"/>
+          <circle cx="3"  cy="3"  r="1.8"/><circle cx="21" cy="3"  r="1.8"/>
+          <circle cx="3"  cy="21" r="1.8"/><circle cx="21" cy="21" r="1.8"/>
+          <circle cx="12" cy="2"  r="1.4"/><circle cx="12" cy="22" r="1.4"/>
+          <line x1="12" y1="9"  x2="4.5" y2="4.5"/>
+          <line x1="12" y1="9"  x2="19.5" y2="4.5"/>
+          <line x1="12" y1="15" x2="4.5" y2="19.5"/>
+          <line x1="12" y1="15" x2="19.5" y2="19.5"/>
+          <line x1="9"  y1="12" x2="2"   y2="12"/>
+          <line x1="15" y1="12" x2="22"  y2="12"/>
+        </svg>
+      </div>
+      <span class="brand-name">PathMind</span>
+      <span class="brand-version">v3.0</span>
+    </a>
+
+    <div class="nav-tabs" id="navTabs">
+      <button class="nav-tab active" data-page="home">Overview</button>
+      <button class="nav-tab" data-page="sma">Slime Mould</button>
+      <button class="nav-tab" data-page="aco">Ant Colony</button>
+      <button class="nav-tab" data-page="research">Research</button>
+      <button class="nav-tab" data-page="team">Team</button>
+    </div>
+
+    <div class="nav-right">
+      <div class="status-indicator" id="globalStatus">
+        <span class="status-dot"></span>
+        <span class="status-text" id="statusText">Ready</span>
+      </div>
+      <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-tab" data-page="home">Overview</button>
+    <button class="mobile-tab" data-page="sma">Slime Mould</button>
+    <button class="mobile-tab" data-page="aco">Ant Colony</button>
+    <button class="mobile-tab" data-page="research">Research</button>
+    <button class="mobile-tab" data-page="team">Team</button>
+  </div>
+</nav>
+
+<!-- ╔══════════════════════════════════════════════════╗
+     ║                 HOME PAGE                       ║
+     ╚══════════════════════════════════════════════════╝ -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="hero-bg">
+      <canvas id="heroBg"></canvas>
+    </div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Bio-Inspired Swarm Intelligence</div>
+      <h1 class="hero-title">
+        City Pathfinding<br/>
+        <span class="hero-accent">Reimagined</span>
+      </h1>
+      <p class="hero-desc">
+        Two biological algorithms. One mission. Find the shortest route between cities
+        navigating real obstacles — buildings, water bodies, urban terrain.
+      </p>
+      <div class="hero-actions">
+        <button class="btn-hero-primary" onclick="goPage('sma')">
+          Try Slime Mould
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="8" x2="13" y2="8"/><polyline points="9,4 13,8 9,12"/></svg>
+        </button>
+        <button class="btn-hero-secondary" onclick="goPage('aco')">
+          Try Ant Colony
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="features-section">
+    <div class="section-container">
+      <div class="section-label">Core Features</div>
+      <h2 class="section-title">Everything you need for<br/>intelligent pathfinding</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+          </div>
+          <h3>Slime Mould Algorithm</h3>
+          <p>Full SMA simulation running in the background. Agents navigate obstacles to form optimal chemical corridors between cities. Path extracted via Dijkstra gradient tracing.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon orange">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+          </div>
+          <h3>Ant Colony Optimization</h3>
+          <p>Live ACO simulation with animated pheromone trails. Probabilistic city selection via τ^α·η^β. Converges on optimal TSP tour with stagnation detection.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg>
+          </div>
+          <h3>Real Obstacles</h3>
+          <p>Draw building blocks and water bodies directly on the canvas. Both algorithms respond physically — agents bounce off walls, ACO penalizes blocked edges proportionally.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h3>Live Analytics</h3>
+          <p>Real-time metrics: simulation time, path distance, iterations, convergence state, pheromone density. Full dashboard with per-city metrics and algorithm parameters.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="algo-comparison">
+    <div class="section-container">
+      <div class="section-label">Algorithms</div>
+      <h2 class="section-title">Two approaches, one goal</h2>
+      <div class="compare-row">
+        <div class="compare-card-home sma-card">
+          <div class="compare-badge green-badge">Slime Mould</div>
+          <h3>SMA — Li et al., 2020</h3>
+          <p>Physarum polycephalum forms optimal networks between food sources. Our SMA engine spawns agents from all cities simultaneously and extracts the gradient-steepest path through the resulting chemical trail map.</p>
+          <ul>
+            <li>Pixel-resolution trail map</li>
+            <li>Hard obstacle avoidance</li>
+            <li>Dijkstra path extraction</li>
+            <li>Animated result overlay</li>
+          </ul>
+          <button class="btn-card" onclick="goPage('sma')">Open Simulator →</button>
+        </div>
+        <div class="compare-card-home aco-card">
+          <div class="compare-badge orange-badge">Ant Colony</div>
+          <h3>ACO — Dorigo, 1992</h3>
+          <p>Ants deposit pheromone proportional to path quality. Shorter, unobstructed paths accumulate trail faster than evaporation destroys it — converging the colony on globally optimal routes.</p>
+          <ul>
+            <li>Graph-based pheromone matrix</li>
+            <li>τ^α · η^β transition rule</li>
+            <li>Obstacle cost inflation</li>
+            <li>Best-tour golden overlay</li>
+          </ul>
+          <button class="btn-card" onclick="goPage('aco')">Open Simulator →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">PathMind v3.0</div>
+      <div class="footer-center">Slime Mould Algorithm · Ant Colony Optimization · Bio-Inspired Pathfinding</div>
+      <div class="footer-team">Team Hamburger — ADIT</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════╗
+     ║              SLIME MOULD PAGE                   ║
+     ╚══════════════════════════════════════════════════╝ -->
+<div class="page" id="page-sma">
+  <div class="sim-layout">
+    <!-- LEFT PANEL -->
+    <aside class="side-panel left-panel" id="smaLeftPanel">
+      <div class="panel-section">
+        <div class="section-hdr">
+          <span>Status</span>
+          <span class="badge-pill" id="smaBadge">Idle</span>
+        </div>
+        <div class="stat-grid">
+          <div class="stat-cell"><div class="stat-label">Cities</div><div class="stat-value" id="smaCities">0</div></div>
+          <div class="stat-cell"><div class="stat-label">Obstacles</div><div class="stat-value" id="smaObs">0</div></div>
+          <div class="stat-cell"><div class="stat-label">Agents</div><div class="stat-value accent" id="smaAgents">—</div></div>
+          <div class="stat-cell"><div class="stat-label">Iterations</div><div class="stat-value" id="smaIter">—</div></div>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="section-hdr"><span>Draw Mode</span></div>
+        <div class="mode-grid" id="smaModeGrid">
+          <button class="mode-btn active" data-mode="city" onclick="setSMode('city',this)">
+            <span class="mode-icon">🏙️</span><span>City</span>
+          </button>
+          <button class="mode-btn" data-mode="building" onclick="setSMode('building',this)">
+            <span class="mode-icon">🏢</span><span>Building</span>
+          </button>
+          <button class="mode-btn" data-mode="water" onclick="setSMode('water',this)">
+            <span class="mode-icon">🌊</span><span>Water</span>
+          </button>
+          <button class="mode-btn" data-mode="erase" onclick="setSMode('erase',this)">
+            <span class="mode-icon">⌫</span><span>Erase</span>
+          </button>
+        </div>
+        <div class="mode-hint" id="smaModeHint">Click canvas to place a city node.</div>
+      </div>
+
+      <div class="panel-section">
+        <div class="section-hdr"><span>Parameters</span></div>
+        <div class="sliders">
+          <div class="slider-row">
+            <div class="slider-top"><span>Agents</span><span class="slider-val" id="sv-agt">500</span></div>
+            <input type="range" id="sc-agt" min="200" max="1200" value="500" oninput="document.getElementById('sv-agt').textContent=this.value">
+          </div>
+          <div class="slider-row">
+            <div class="slider-top"><span>Sensor Angle</span><span class="slider-val" id="sv-ang">30°</span></div>
+            <input type="range" id="sc-ang" min="10" max="75" value="30" oninput="document.getElementById('sv-ang').textContent=this.value+'°'">
+          </div>
+          <div class="slider-row">
+            <div class="slider-top"><span>Evaporation</span><span class="slider-val" id="sv-ev">0.97</span></div>
+            <input type="range" id="sc-ev" min="85" max="99" value="97" oninput="document.getElementById('sv-ev').textContent='0.'+this.value">
+          </div>
+          <div class="slider-row">
+            <div class="slider-top"><span>Iterations</span><span class="slider-val" id="sv-it">400</span></div>
+            <input type="range" id="sc-it" min="150" max="900" value="400" oninput="document.getElementById('sv-it').textContent=this.value">
+          </div>
+          <div class="slider-row">
+            <div class="slider-top"><span>Path Threshold</span><span class="slider-val" id="sv-th">0.5</span></div>
+            <input type="range" id="sc-th" min="1" max="9" value="5" oninput="document.getElementById('sv-th').textContent='0.'+this.value">
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="section-hdr"><span>Actions</span></div>
+        <div class="action-buttons">
+          <button class="btn-action primary" onclick="loadSMADemo()">Load Demo</button>
+          <button class="btn-action success" id="smaComputeBtn" onclick="runSMA()">
+            ▶ Compute Path
+          </button>
+          <button class="btn-action danger" onclick="resetSMA()">Reset</button>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="section-hdr"><span>Algorithm</span></div>
+        <p class="info-snippet">
+          SMA runs a full physarum simulation. Agents spawn from every city, sense chemical gradients in 3 directions, and deposit trail. After all iterations, Dijkstra traces the gradient-steepest path between cities.
+        </p>
+      </div>
+    </aside>
+
+    <!-- CANVAS -->
+    <main class="canvas-main">
+      <div class="canvas-topbar">
+        <span class="canvas-label" id="smaCanvasLabel">Slime Mould Pathfinder</span>
+        <span class="canvas-status" id="smaCanvasStatus">Place 2+ cities then click Compute Path</span>
+      </div>
+      <div class="canvas-container" id="smaCanvasContainer">
+        <canvas id="smaCanvas"></canvas>
+        <div class="canvas-overlay-corners">
+          <span class="corner tl"></span><span class="corner tr"></span>
+          <span class="corner bl"></span><span class="corner br"></span>
+        </div>
+        <!-- Progress overlay -->
+        <div class="compute-overlay" id="smaComputeOverlay" style="display:none">
+          <div class="compute-box">
+            <div class="compute-spinner"></div>
+            <div class="compute-label" id="smaComputeLabel">Initializing agents...</div>
+            <div class="compute-progress-bar"><div class="compute-progress-fill" id="smaProgressFill"></div></div>
+            <div class="compute-sub" id="smaComputeSub">Running SMA simulation</div>
+          </div>
+        </div>
+      </div>
+      <div class="canvas-bottombar">
+        <div class="legend-strip">
+          <span class="leg"><span class="leg-dot" style="background:#34d399"></span>Shortest Path</span>
+          <span class="leg"><span class="leg-dot" style="background:#60a5fa"></span>City Node</span>
+          <span class="leg"><span class="leg-rect" style="background:#1e3a5a"></span>Water</span>
+          <span class="leg"><span class="leg-rect" style="background:#292524"></span>Building</span>
+          <span class="leg"><span class="leg-dot" style="background:#818cf8;opacity:.5"></span>Agents</span>
+        </div>
+        <span class="canvas-meta" id="smaIterDisplay">—</span>
+      </div>
+    </main>
+
+    <!-- RIGHT PANEL -->
+    <aside class="side-panel right-panel">
+      <div class="panel-section">
+        <div class="section-hdr"><span>Result</span></div>
+        <div class="result-box" id="smaResultBox" style="display:none">
+          <div class="result-header">Shortest Path Found</div>
+          <div class="result-cities" id="smaResultCities">—</div>
+          <div class="result-distance-label">Total Distance</div>
+          <div class="result-distance" id="smaResultDist">—</div>
+        </div>
+        <div class="no-result" id="smaNoResult">
+          Run the algorithm to find the optimal path connecting all placed cities.
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="section-hdr"><span>Metrics</span></div>
+        <div class="metrics-list">
+          <div class="metric-row"><span class="metric-key">Sim Time</span><span class="metric-val green" id="smaTime">—</span></div>
+          <div class="metric-row"><span class="metric-key">Path Segments</span><span class="metric-val" id="smaSegments">—</span></div>
+          <div class="metric-row"><span class="metric-key">Trail Coverage</span><span class="metric-val accent" id="smaCoverage">—</span></div>
+          <div class="metric-row"><span class="metric-key">Phase</span><span class="metric-val amber" id="smaPhase">IDLE</span></div>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="section-hdr"><span>City List</span></div>
+        <div class="city-list-widget" id="smaCityList">
+          <div class="city-list-empty">No cities placed yet.</div>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="section-hdr"><span>SMA Phases</span></div>
+        <div class="phases-list">
+          <div class="phase-item">
+            <div class="phase-dot green-dot"></div>
+            <div><strong>Explore</strong> — Agents disperse from all cities sensing gradients</div>
+          </div>
+          <div class="phase-item">
+            <div class="phase-dot amber-dot"></div>
+            <div><strong>Reinforce</strong> — City beacons amplify trails; corridors emerge</div>
+          </div>
+          <div class="phase-item">
+            <div class="phase-dot blue-dot"></div>
+            <div><strong>Extract</strong> — Dijkstra traces shortest path on trail map</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════╗
+     ║            ANT COLONY PAGE                      ║
+     ╚══════════════════════════════════════════════════╝ -->
+<div class="page" id="page-aco">
+  <div class="sim-layout">
+    <aside class="side-panel left-panel">
+      <div class="panel-section">
+        <div class="section-hdr">
+          <span>Status</span>
+          <span class="badge-pill" id="acoBadge">Idle</span>
+        </div>
+        <div class="stat-grid">
+          <div class="stat-cell"><div class="stat-label">Cities</div><div class="stat-value" id="acoCities">0</div></div>
+          <div class="stat-cell"><div class="stat-label">Colony</div><div class="stat-value accent" id="acoAnts">0</div></div>
+          <div class="stat-cell"><div class="stat-label">Cycles</div><div class="stat-value" id="acoCycles">0</div></div>
+          <div class="stat-cell"><div class="stat-label">Best Dist</div><div class="stat-value green" id="acoBest">—</div></div>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="section-hdr"><span>Draw Mode</span></div>
+        <div class="mode-grid" id="acoModeGrid">
+          <button class="mode-btn active" data-mode="city" onclick="setAMode('city',this)">
+            <span class="mode-icon">🏙️</span><span>City</span>
+          </button>
+          <button class="mode-btn" data-mode="building" onclick="setAMode('building',this)">
+            <span class="mode-icon">🏢</span><span>Building</span>
+          </button>
+          <button class="mode-btn" data-mode="water" onclick="setAMode('water',this)">
+            <span class="mode-icon">🌊</span><span>Water</span>
+          </button>
+          <button class="mode-btn" data-mode="erase" onclick="setAMode('erase',this)">
+            <span class="mode-icon">⌫</span><span>Erase</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="section-hdr"><span>Colony Parameters</span></div>
+        <div class="sliders">
+          <div class="slider-row">
+            <div class="slider-top"><span>Colony Size</span><span class="slider-val" id="av-ants">80</span></div>
+            <input type="range" id="ac-ants" min="20" max="200" value="80" oninput="document.getElementById('av-ants').textContent=this.value">
+          </div>
+          <div class="slider-row">
+            <div class="slider-top"><span>α Pheromone</span><span class="slider-val" id="av-al">1.0</span></div>
+            <input type="range" id="ac-al" min="1" max="50" value="10" oninput="document.getElementById('av-al').textContent=(this.value/10).toFixed(1)">
+          </div>
+          <div class="slider-row">
+            <div class="slider-top"><span>β Distance</span><span class="slider-val" id="av-be">2.0</span></div>
+            <input type="range" id="ac-be" min="1" max="50" value="20" oninput="document.getElementById('av-be').textContent=(this.value/10).toFixed(1)">
+          </div>
+          <div class="slider-row">
+            <div class="slider-top"><span>Evaporation ρ</span><span class="slider-val" id="av-ev">0.02</span></div>
+            <input type="range" id="ac-ev" min="1" max="20" value="2" oninput="document.getElementById('av-ev').textContent=(this.value/100).toFixed(2)">
+          </div>
+          <div class="slider-row">
+            <div class="slider-top"><span>Deposit Q</span><span class="slider-val" id="av-q">100</span></div>
+            <input type="range" id="ac-q" min="10" max="500" value="100" oninput="document.getElementById('av-q').textContent=this.value">
+          </div>
+          <div class="slider-row">
+            <div class="slider-top"><span>Elitist Bonus</span><span class="slider-val" id="av-el">0</span></div>
+            <input type="range" id="ac-el" min="0" max="400" value="0" oninput="document.getElementById('av-el').textContent=this.value">
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="section-hdr"><span>Controls</span></div>
+        <div class="action-buttons">
+          <button class="btn-action primary" onclick="loadACODemo()">Load Demo</button>
+          <button class="btn-action primary" onclick="initACO()">Initialize</button>
+          <button class="btn-action success" id="acoRunBtn" onclick="toggleACO()">▶ Run</button>
+          <button class="btn-action danger" onclick="resetACO()">Reset</button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="canvas-main">
+      <div class="canvas-topbar">
+        <span class="canvas-label">Ant Colony Optimizer</span>
+        <span class="canvas-status" id="acoCanvasStatus">Place cities → Initialize → Run</span>
+      </div>
+      <div class="canvas-container" id="acoCanvasContainer">
+        <canvas id="acoCanvas"></canvas>
+        <div class="canvas-overlay-corners">
+          <span class="corner tl"></span><span class="corner tr"></span>
+          <span class="corner bl"></span><span class="corner br"></span>
+        </div>
+      </div>
+      <div class="canvas-bottombar">
+        <div class="legend-strip">
+          <span class="leg"><span class="leg-dot" style="background:#f97316"></span>Foraging</span>
+          <span class="leg"><span class="leg-dot" style="background:#fbbf24"></span>Returning</span>
+          <span class="leg"><span class="leg-dot" style="background:#60a5fa"></span>City</span>
+          <span class="leg"><span class="leg-dot" style="background:#60a5fa;opacity:.35;width:20px;border-radius:2px"></span>Pheromone</span>
+          <span class="leg"><span class="leg-dot" style="background:#fbbf24;border-radius:2px"></span>Best Tour</span>
+        </div>
+        <span class="canvas-meta" id="acoMeta">—</span>
+      </div>
+    </main>
+
+    <aside class="side-panel right-panel">
+      <div class="panel-section">
+        <div class="section-hdr"><span>Tour Quality</span></div>
+        <div class="metrics-list">
+          <div class="metric-row"><span class="metric-key">Best Tour</span><span class="metric-val green" id="acoBestR">—</span></div>
+          <div class="metric-row"><span class="metric-key">Routes Found</span><span class="metric-val accent" id="acoRoutes">0</span></div>
+          <div class="metric-row"><span class="metric-key">Convergence</span><span class="metric-val amber" id="acoConv">—</span></div>
+          <div class="metric-row"><span class="metric-key">Obstacles</span><span class="metric-val" id="acoObsCount">0</span></div>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="section-hdr"><span>Transition Rule</span></div>
+        <div class="formula-widget">
+          <div class="formula-line accent">P(i → j) =</div>
+          <div class="formula-line">τ(i,j)<sup>α</sup> · η(i,j)<sup>β</sup></div>
+          <div class="formula-divider"></div>
+          <div class="formula-line">Σ τ<sup>α</sup> · η<sup>β</sup></div>
+          <div class="formula-legend">
+            <span><b>τ</b> pheromone · <b>η</b> = 1/d · <b>α</b> exploit · <b>β</b> explore · <b>ρ</b> evaporate</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="section-hdr"><span>ACO Variants</span></div>
+        <div class="variants-list">
+          <div class="variant-item orange-left"><b>Ant System</b> — All ants deposit equally</div>
+          <div class="variant-item blue-left"><b>Elitist AS</b> — Best tour gets extra deposit (slider above)</div>
+          <div class="variant-item green-left"><b>MMAS</b> — Pheromone bounded to prevent stagnation</div>
+          <div class="variant-item purple-left"><b>ACS</b> — Only global-best ant deposits</div>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="section-hdr"><span>About ACO</span></div>
+        <p class="info-snippet">Dorigo (1992) modelled ant foraging stigmergy. Shorter paths accumulate pheromone faster than evaporation destroys it — positive feedback drives the colony toward globally optimal routes.</p>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════╗
+     ║              RESEARCH PAGE                      ║
+     ╚══════════════════════════════════════════════════╝ -->
+<div class="page" id="page-research">
+  <div class="research-shell">
+    <div class="research-hero">
+      <div class="eyebrow">Bio-Inspired Computing</div>
+      <h1>Swarm Intelligence<br/><span class="accent-text">for City Pathfinding</span></h1>
+      <p>How single-celled organisms and ant colonies solve routing problems — and how we model them computationally.</p>
+    </div>
+
+    <div class="research-content">
+      <div class="research-section">
+        <div class="rs-label">Slime Mould Algorithm</div>
+        <h2>The cell that designs railways</h2>
+        <p>In 2010, Toshiyuki Nakagaki placed food at positions matching Tokyo train stations and introduced <em>Physarum polycephalum</em> at the centre. Within 26 hours the organism had recreated the Yamanote Line topology — optimising for efficiency and fault tolerance without a nervous system. Published in <em>Science</em>, this experiment demonstrated that unicellular organisms can solve combinatorial network design problems purely through chemical feedback.</p>
+        <p>The <strong>Slime Mould Algorithm (SMA)</strong> formalised by Li et al. (2020) captures this: agents sense trail gradients in three forward directions and steer toward stronger signals, depositing chemical that attracts other agents. The oscillation weight W simulates bio-oscillation between positive and negative feedback phases, automatically balancing exploration and exploitation.</p>
+        <div class="formula-block">
+          <div class="formula-comment">// Position update equations</div>
+          <div>X(t+1) = X<sub>best</sub> + vb · (W · X<sub>A</sub> − X<sub>B</sub>)   <span class="formula-comment">probability p</span></div>
+          <div>X(t+1) = vc · X(t)   <span class="formula-comment">otherwise</span></div>
+          <div class="formula-spacer"></div>
+          <div class="formula-comment">// Oscillation weight — positive feedback (rank ≤ N/2)</div>
+          <div>W(i) = 1 + r · log((bF − S(i)) / (bF − wF) + 1)</div>
+          <div class="formula-comment">// Oscillation weight — negative feedback (rank &gt; N/2)</div>
+          <div>W(i) = 1 − r · log((bF − S(i)) / (bF − wF) + 1)</div>
+        </div>
+
+        <div class="app-cards">
+          <div class="app-card"><div class="app-icon">🚆</div><h4>Railway Networks</h4><p>Physarum recreated Tokyo's rail network. SMA designs fault-tolerant, minimum-cost transit topologies.</p></div>
+          <div class="app-card"><div class="app-icon">⚡</div><h4>Power Grid</h4><p>Economic dispatch and reactive power flow. Outperforms PSO/GWO on IEEE test systems.</p></div>
+          <div class="app-card"><div class="app-icon">🤖</div><h4>Robot Navigation</h4><p>Obstacle-rich path planning. Multi-objective SMA balances energy, safety, and time.</p></div>
+          <div class="app-card"><div class="app-icon">🏥</div><h4>Medical Imaging</h4><p>Multi-threshold CT/MRI segmentation. Faster convergence than competing metaheuristics.</p></div>
+          <div class="app-card"><div class="app-icon">☁️</div><h4>Cloud Scheduling</h4><p>VM placement and DAG workflow scheduling for latency and energy minimisation.</p></div>
+          <div class="app-card"><div class="app-icon">🧬</div><h4>Feature Selection</h4><p>High-dimensional genomics and NLP. W oscillation prevents premature convergence.</p></div>
+        </div>
+      </div>
+
+      <div class="research-divider"></div>
+
+      <div class="research-section">
+        <div class="rs-label">Ant Colony Optimization</div>
+        <h2>Emergent intelligence from chemistry</h2>
+        <p>Marco Dorigo introduced ACO in his 1992 doctoral dissertation as the first algorithm to solve the Travelling Salesman Problem through emergent collective intelligence. Individual ants have no global knowledge — each deposits pheromone proportional to path quality, biasing successors toward already-reinforced trails. The resulting positive feedback loop converges the colony on globally optimal solutions.</p>
+        <div class="formula-block">
+          <div class="formula-comment">// Probabilistic city selection</div>
+          <div>P(i→j) = [τ(i,j)<sup>α</sup> · η(i,j)<sup>β</sup>] / Σ_k [τ(i,k)<sup>α</sup> · η(i,k)<sup>β</sup>]</div>
+          <div class="formula-spacer"></div>
+          <div class="formula-comment">// Pheromone update</div>
+          <div>τ(i,j) ← (1−ρ) · τ(i,j) + Σ Δτ(i,j)</div>
+          <div>Δτ(i,j) = Q / L<sub>k</sub>   <span class="formula-comment">if ant k used edge (i,j)</span></div>
+        </div>
+      </div>
+
+      <div class="research-divider"></div>
+
+      <div class="research-section">
+        <div class="rs-label">Comparison</div>
+        <h2>Choosing the right algorithm</h2>
+        <div class="compare-table">
+          <div class="ct-header"><span>Attribute</span><span>SMA</span><span>ACO</span></div>
+          <div class="ct-row"><span>Problem Type</span><span>Continuous space</span><span>Discrete graph</span></div>
+          <div class="ct-row"><span>Obstacle Handling</span><span>Hard pixel wall</span><span>Edge cost penalty</span></div>
+          <div class="ct-row"><span>Path Output</span><span>Pixel coordinate chain</span><span>City sequence tour</span></div>
+          <div class="ct-row"><span>Parameters</span><span>Few — robust</span><span>α, β, ρ require tuning</span></div>
+          <div class="ct-row"><span>Convergence</span><span>Oscillation-driven</span><span>Pheromone feedback</span></div>
+          <div class="ct-row"><span>Best For</span><span>Physical corridor routing</span><span>TSP / multi-city tour</span></div>
+          <div class="ct-row"><span>Published</span><span>Li et al., 2020</span><span>Dorigo, 1992</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════╗
+     ║               TEAM PAGE                         ║
+     ╚══════════════════════════════════════════════════╝ -->
+<div class="page" id="page-team">
+  <div class="team-shell">
+    <div class="team-hero">
+      <div class="team-eyebrow">Project Contributors</div>
+      <h1 class="team-title"><span class="accent-text">Team</span></h1>
+      <p class="team-subtitle">ADIT — Applied Algorithms &amp; Bio-Inspired Computing</p>
+    </div>
+
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6)">
+          <span>YS</span>
+        </div>
+        <div class="team-info">
+          <h3>Yashvardhan Sharma</h3>
+          <div class="team-roll">Roll No. I067</div>
+          <div class="team-tags">
+            <span class="tag">Slime Mould Engine</span>
+            <span class="tag">Ant Colony Optimization</span>
+            <span class="tag">Path Extraction</span>
+            <span class="tag">Canvas Rendering</span>
+            <span class="tag">Obstacle System</span>
+            <span class="tag">Pheromone Simulation</span>
+            <span class="tag">UI Architecture</span>
+            <span class="tag">Algorithm Design</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#f97316,#ef4444)">
+          <span>SS</span>
+        </div>
+        <div class="team-info">
+          <h3>Shaurya Pratap Singh</h3>
+          <div class="team-roll">Roll No. I070</div>
+          <div class="team-tags">
+            <span class="tag">Documentation</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#10b981,#06b6d4)">
+          <span>RS</span>
+        </div>
+        <div class="team-info">
+          <h3>Rishit Shah</h3>
+          <div class="team-roll">Roll No. I057</div>
+          <div class="team-tags">
+            <span class="tag">Testing</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="team-about">
+      <h2>About the Project</h2>
+      <p>PathMind is a full-stack bio-inspired pathfinding simulator built to demonstrate how two distinct swarm intelligence algorithms — the Slime Mould Algorithm and Ant Colony Optimization — solve the problem of finding shortest routes between multiple cities while navigating real-world obstacles like buildings and water bodies.</p>
+      <p>The project implements both algorithms from first principles: SMA runs as a genuine background computation with pixel-resolution agent simulation and gradient-based path extraction; ACO provides a live animated colony with real-time pheromone visualisation and convergence detection.</p>
+      <div class="tech-stack">
+        <div class="tech-item">HTML5 Canvas</div>
+        <div class="tech-item">Vanilla JavaScript</div>
+        <div class="tech-item">CSS3 Animations</div>
+        <div class="tech-item">Dijkstra Pathfinding</div>
+        <div class="tech-item">SMA (Li et al. 2020)</div>
+        <div class="tech-item">ACO (Dorigo 1992)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/utils.js"></script>
+<script src="js/draw.js"></script>
+<script src="js/sma.js"></script>
+<script src="js/aco.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
